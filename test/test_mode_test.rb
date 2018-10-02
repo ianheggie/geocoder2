@@ -3,19 +3,19 @@ require 'test_helper'
 class TestModeTest < Test::Unit::TestCase
 
   def setup
-    @_original_lookup = Geocoder.config.lookup
-    Geocoder.configure(:lookup => :test)
+    @_original_lookup = Geocoder2.config.lookup
+    Geocoder2.configure(:lookup => :test)
   end
 
   def teardown
-    Geocoder::Lookup::Test.reset
-    Geocoder.configure(:lookup => @_original_lookup)
+    Geocoder2::Lookup::Test.reset
+    Geocoder2.configure(:lookup => @_original_lookup)
   end
 
   def test_search_with_known_stub
-    Geocoder::Lookup::Test.add_stub("New York, NY", [mock_attributes])
+    Geocoder2::Lookup::Test.add_stub("New York, NY", [mock_attributes])
 
-    results = Geocoder.search("New York, NY")
+    results = Geocoder2.search("New York, NY")
     result = results.first
 
     assert_equal 1, results.size
@@ -26,14 +26,14 @@ class TestModeTest < Test::Unit::TestCase
 
   def test_search_with_unknown_stub_without_default
     assert_raise ArgumentError do
-      Geocoder.search("New York, NY")
+      Geocoder2.search("New York, NY")
     end
   end
 
   def test_search_with_unknown_stub_with_default
-    Geocoder::Lookup::Test.set_default_stub([mock_attributes])
+    Geocoder2::Lookup::Test.set_default_stub([mock_attributes])
 
-    results = Geocoder.search("Atlantis, OC")
+    results = Geocoder2.search("Atlantis, OC")
     result = results.first
 
     assert_equal 1, results.size

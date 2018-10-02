@@ -2,7 +2,7 @@ require 'rubygems'
 require 'test/unit'
 require 'test_helper'
 require 'mongoid'
-require 'geocoder/models/mongoid'
+require 'geocoder2/models/mongoid'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
@@ -20,7 +20,7 @@ end
 #
 class Place
   include Mongoid::Document
-  include Geocoder::Model::Mongoid
+  include Geocoder2::Model::Mongoid
 
   geocoded_by :address, :coordinates => :location
   field :name
@@ -36,7 +36,7 @@ end
 
 class PlaceWithoutIndex
   include Mongoid::Document
-  include Geocoder::Model::Mongoid
+  include Geocoder2::Model::Mongoid
 
   field :location, :type => Array
   geocoded_by :location, :skip_index => true

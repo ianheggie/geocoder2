@@ -1,17 +1,17 @@
 Changelog
 =========
 
-Major changes to Geocoder for each release. Please see the Git log for complete list of changes.
+Major changes to Geocoder2 for each release. Please see the Git log for complete list of changes.
 
 1.1.9 (2013 Dec 11)
 -------------------
 
 * DEPRECATED support for Ruby 1.8.x. Will be dropped in a future version.
 * Require API key for MapQuest (thanks github.com/robdiciuccio).
-* Add support for geocoder.us and HTTP basic auth (thanks github.com/komba).
+* Add support for geocoder2.us and HTTP basic auth (thanks github.com/komba).
 * Add support for Data Science Toolkit lookup (thanks github.com/ejhayes).
 * Add support for Baidu (thanks github.com/mclee).
-* Add Geocoder::Calculations.random_point_near method (thanks github.com/adambray).
+* Add Geocoder2::Calculations.random_point_near method (thanks github.com/adambray).
 * Fix: #nearbys method with Mongoid (thanks github.com/pascalbetz).
 * Fix: bug in FreeGeoIp lookup that was preventing exception from being raised when configured cache was unavailable.
 
@@ -39,9 +39,9 @@ Major changes to Geocoder for each release. Please see the Git log for complete 
 
 * Major changes to configuration syntax which allow for API-specific config options. Old config syntax is now DEPRECATED.
 * Add support for MaxMind API (thanks github.com/gonzoyumo).
-* Add optional Geocoder::InvalidApiKey exception for bad API credentials (Yahoo, Yandex, Bing, and Maxmind). Warn when bad key and exception not set in Geocoder.configure(:always_raise => [...]).
+* Add optional Geocoder2::InvalidApiKey exception for bad API credentials (Yahoo, Yandex, Bing, and Maxmind). Warn when bad key and exception not set in Geocoder2.configure(:always_raise => [...]).
 * Add support for X-Real-IP and X-Forwarded-For headers (thanks github.com/konsti).
-* Add support for custom Nominatim host config: Geocoder.configure(:nominatim => {:host => "..."}).
+* Add support for custom Nominatim host config: Geocoder2.configure(:nominatim => {:host => "..."}).
 * Raise exception when required API key is missing or incorrect format.
 * Add support for Google's :region and :components parameters (thanks to github.com/tomlion).
 * Fix: string escaping bug in OAuth lib (thanks github.com/m0thman).
@@ -63,7 +63,7 @@ Major changes to Geocoder for each release. Please see the Git log for complete 
 1.1.4 (2012 Oct 2)
 ------------------
 
-* Deprecate Geocoder::Result::Nominatim#class and #type methods. Use #place_class and #place_type instead.
+* Deprecate Geocoder2::Result::Nominatim#class and #type methods. Use #place_class and #place_type instead.
 * Add support for setting arbitrary parameters in geocoding request URL.
 * Add support for Google's :bounds parameter (thanks to github.com/rosscooperman and github.com/peterjm for submitting suggestions).
 * Add support for :select => :geo_only option to near scope (thanks github.com/gugl).
@@ -71,16 +71,16 @@ Major changes to Geocoder for each release. Please see the Git log for complete 
 * Fix: error on Yahoo lookup due to API change (thanks github.com/kynesun).
 * Fix: problem with Mongoid field aliases not being respected.
 * Fix: :exclude option to .near scope when primary key != :id (thanks github.com/smisml).
-* Much code refactoring (added Geocoder::Query class and Geocoder::Sql module).
+* Much code refactoring (added Geocoder2::Query class and Geocoder2::Sql module).
 
 1.1.3 (2012 Aug 26)
 -------------------
 
 * Add support for Mapquest geocoding service (thanks github.com/razorinc).
-* Add :test lookup for easy testing of apps using Geocoder (thanks github.com/mguterl).
+* Add :test lookup for easy testing of apps using Geocoder2 (thanks github.com/mguterl).
 * Add #precision method to Yandex results (thanks github.com/gemaker).
 * Add support for raising :all exceptions (thanks github.com/andyvb).
-* Add exceptions for certain Google geocoder responses (thanks github.com/andyvb).
+* Add exceptions for certain Google geocoder2 responses (thanks github.com/andyvb).
 * Add Travis-CI integration (thanks github.com/petergoldstein).
 * Fix: unit config was not working with SQLite (thanks github.com/balvig).
 * Fix: get tests to pass under Jruby (thanks github.com/petergoldstein).
@@ -116,9 +116,9 @@ Major changes to Geocoder for each release. Please see the Git log for complete 
 * Fix incorrect object ID when join used (fixes issue #140).
 * Fix calculation of bounding box which spans 180th meridian (thanks github.com/hwuethrich).
 * Add within_bounding_box scope for ActiveRecord-based models (thanks github.com/gavinhughes and dbloete).
-* Add option to raise Geocoder::OverQueryLimitError for Google geocoding service.
+* Add option to raise Geocoder2::OverQueryLimitError for Google geocoding service.
 * Add support for Nominatim geocoding service (thanks github.com/wranglerdriver).
-* Add support for API key to Geocoder.ca geocoding service (thanks github.com/ryanLonac).
+* Add support for API key to Geocoder2.ca geocoding service (thanks github.com/ryanLonac).
 * Add support for state to Yandex results (thanks github.com/tipugin).
 
 1.0.5 (2011 Oct 26)
@@ -177,21 +177,21 @@ Major changes to Geocoder for each release. Please see the Git log for complete 
 * Add support for Mongoid.
 * Add bearing_to/from methods to geocoded objects.
 * Improve SQLite's distance calculation heuristic.
-* Fix: Geocoder::Calculations.geographic_center was modifying its argument in-place (reported by github.com/joelmats).
+* Fix: Geocoder2::Calculations.geographic_center was modifying its argument in-place (reported by github.com/joelmats).
 * Fix: sort 'near' query results by distance when using SQLite.
 * Clean up input: search for coordinates as a string with space after comma yields zero results from Google. Now we get rid of any such space before sending the query.
-* DEPRECATION: Geocoder.near should not take <tt>:limit</tt> or <tt>:offset</tt> options.
+* DEPRECATION: Geocoder2.near should not take <tt>:limit</tt> or <tt>:offset</tt> options.
 * DEPRECATION: Change argument format of all methods that take lat/lon as separate arguments. Now you must pass the coordinates as an array [lat,lon], but you may alternatively pass a address string (will look up coordinates) or a geocoded object (or any object that implements a to_coordinates method which returns a [lat,lon] array).
 
 0.9.11 (2011 Mar 25)
 --------------------
 
 * Add support for result caching.
-* Add support for Geocoder.ca geocoding service.
+* Add support for Geocoder2.ca geocoding service.
 * Add +bearing+ attribute to objects returned by geo-aware queries (thanks github.com/matellis).
 * Add config setting: language.
 * Add config settings: +use_https+, +google_api_key+ (thanks github.com/svesely).
-* DEPRECATION: <tt>Geocoder.search</tt> now returns an array instead of a single result.
+* DEPRECATION: <tt>Geocoder2.search</tt> now returns an array instead of a single result.
 * DEPRECATION: <tt>obj.nearbys</tt> second argument is now an options hash (instead of units). Please change <tt>obj.nearbys(20, :km)</tt> to: <tt>obj.nearbys(20, :units => :km)</tt>.
 
 0.9.10 (2011 Mar 9)
@@ -205,13 +205,13 @@ Major changes to Geocoder for each release. Please see the Git log for complete 
 
 * Add support for IP address geocoding via FreeGeoIp.net.
 * Add support for Yahoo PlaceFinder geocoding API.
-* Add support for custom geocoder data handling by passing a block to geocoded_by or reverse_geocoded_by.
+* Add support for custom geocoder2 data handling by passing a block to geocoded_by or reverse_geocoded_by.
 * Add <tt>Rack::Request#location</tt> method for geocoding user's IP address.
-* Change gem name to geocoder (no more rails-geocoder).
+* Change gem name to geocoder2 (no more rails-geocoder2).
 * Gem now works outside of Rails.
 * DEPRECATION: +fetch_coordinates+ no longer takes an argument.
 * DEPRECATION: +fetch_address+ no longer takes an argument.
-* DEPRECATION: <tt>Geocoder.search</tt> now returns a single result instead of an array.
+* DEPRECATION: <tt>Geocoder2.search</tt> now returns a single result instead of an array.
 * DEPRECATION: <tt>fetch_coordinates!</tt> has been superceded by +geocode+ (then save your object manually).
 * DEPRECATION: <tt>fetch_address!</tt> has been superceded by +reverse_geocode+ (then save your object manually).
 * Fix: don't die when trying to get coordinates with a nil address (github.com/zmack).
@@ -220,17 +220,17 @@ Major changes to Geocoder for each release. Please see the Git log for complete 
 ------------------
 
 * Include <tt>geocode:all</tt> Rake task in gem (was missing!).
-* Add <tt>Geocoder.search</tt> for access to Google's full response.
+* Add <tt>Geocoder2.search</tt> for access to Google's full response.
 * Add ability to configure Google connection timeout.
 * Emit warnings on Google connection problems and errors.
-* Refactor: insert Geocoder into ActiveRecord via Railtie.
+* Refactor: insert Geocoder2 into ActiveRecord via Railtie.
 
 0.9.7 (2011 Feb 1)
 ------------------
 
 * Add reverse geocoding (+reverse_geocoded_by+).
-* Prevent exception (uninitialized constant Geocoder::Net) when net/http not already required (github.com/sleepycat).
-* Refactor: split monolithic Geocoder module into several smaller ones.
+* Prevent exception (uninitialized constant Geocoder2::Net) when net/http not already required (github.com/sleepycat).
+* Refactor: split monolithic Geocoder2 module into several smaller ones.
 
 0.9.6 (2011 Jan 19)
 -------------------
@@ -249,7 +249,7 @@ Major changes to Geocoder for each release. Please see the Git log for complete 
 0.9.4 (2010 Aug 2)
 ------------------
 
-* Google Maps API key no longer required (uses geocoder v3).
+* Google Maps API key no longer required (uses geocoder2 v3).
 
 0.9.3 (2010 Aug 2)
 ------------------
@@ -287,7 +287,7 @@ Major changes to Geocoder for each release. Please see the Git log for complete 
 0.8.7 (2009 Nov 4)
 ------------------
 
-* Added Geocoder.geographic_center method.
+* Added Geocoder2.geographic_center method.
 * Replaced _get_coordinates class method with read_coordinates instance method.
 
 0.8.6 (2009 Oct 27)
@@ -299,7 +299,7 @@ Major changes to Geocoder for each release. Please see the Git log for complete 
 0.8.5 (2009 Oct 26)
 -------------------
 
-* Avoid calling deprecated method from within Geocoder itself.
+* Avoid calling deprecated method from within Geocoder2 itself.
 
 0.8.4 (2009 Oct 23)
 -------------------
@@ -314,13 +314,13 @@ Major changes to Geocoder for each release. Please see the Git log for complete 
 0.8.2 (2009 Oct 12)
 -------------------
 
-* Allow a model's geocoder search string method to be something other than an ActiveRecord attribute.
+* Allow a model's geocoder2 search string method to be something other than an ActiveRecord attribute.
 * Clean up documentation.
 
 0.8.1 (2009 Oct 8)
 ------------------
 
-* Extract XML-fetching code from <tt>Geocoder.search</tt> and place in Geocoder._fetch_xml (for ease of mocking).
+* Extract XML-fetching code from <tt>Geocoder2.search</tt> and place in Geocoder2._fetch_xml (for ease of mocking).
 * Add tests for coordinate-fetching instance methods.
 
 0.8.0 (2009 Oct 1)

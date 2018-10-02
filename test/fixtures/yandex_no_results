@@ -2,7 +2,7 @@
     "response": {
         "GeoObjectCollection": {
             "metaDataProperty": {
-                "GeocoderResponseMetaData": {
+                "Geocoder2ResponseMetaData": {
                     "request": "blah",
                     "found": "0",
                     "results": "10"

@@ -2,7 +2,7 @@
    "response":{
       "GeoObjectCollection":{
          "metaDataProperty":{
-            "GeocoderResponseMetaData":{
+            "Geocoder2ResponseMetaData":{
                "request":"57.423359,55.892596",
                "found":"3",
                "results":"10",
@@ -15,7 +15,7 @@
             {
                "GeoObject":{
                   "metaDataProperty":{
-                     "GeocoderMetaData":{
+                     "Geocoder2MetaData":{
                         "kind":"area",
                         "text":"Россия, республика Башкортостан, Караидельский район",
                         "precision":"other",
@@ -50,7 +50,7 @@
             {
                "GeoObject":{
                   "metaDataProperty":{
-                     "GeocoderMetaData":{
+                     "Geocoder2MetaData":{
                         "kind":"province",
                         "text":"Россия, республика Башкортостан",
                         "precision":"other",
@@ -82,7 +82,7 @@
             {
                "GeoObject":{
                   "metaDataProperty":{
-                     "GeocoderMetaData":{
+                     "Geocoder2MetaData":{
                         "kind":"country",
                         "text":"Россия",
                         "precision":"other",

@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'test_helper'
 
-class GeocoderTest < Test::Unit::TestCase
+class Geocoder2Test < Test::Unit::TestCase
 
   def test_distance_to_returns_float
     v = Venue.new(*venue_params(:msg))
@@ -10,18 +10,18 @@ class GeocoderTest < Test::Unit::TestCase
   end
 
   def test_coordinates_method_returns_array
-    assert Geocoder.coordinates("Madison Square Garden, New York, NY").is_a?(Array)
+    assert Geocoder2.coordinates("Madison Square Garden, New York, NY").is_a?(Array)
   end
 
   def test_address_method_returns_string
-    assert Geocoder.address([40.750354, -73.993371]).is_a?(String)
+    assert Geocoder2.address([40.750354, -73.993371]).is_a?(String)
   end
 
   def test_geographic_center_doesnt_overwrite_argument_value
     # test for the presence of a bug that was introduced in version 0.9.11
     orig_points = [[52,8], [46,9], [42,5]]
     points = orig_points.clone
-    Geocoder::Calculations.geographic_center(points)
+    Geocoder2::Calculations.geographic_center(points)
     assert_equal orig_points, points
   end
 

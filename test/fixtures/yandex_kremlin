@@ -2,7 +2,7 @@
     "response": {
         "GeoObjectCollection": {
             "metaDataProperty": {
-                "GeocoderResponseMetaData": {
+                "Geocoder2ResponseMetaData": {
                     "request": "Кремль, Moscow, Russia",
                     "found": "1",
                     "results": "10"
@@ -12,7 +12,7 @@
                 {
                     "GeoObject": {
                         "metaDataProperty": {
-                            "GeocoderMetaData": {
+                            "Geocoder2MetaData": {
                                 "kind": "vegetation",
                                 "text": "Россия, Москва, Московский Кремль",
                                 "precision": "other",

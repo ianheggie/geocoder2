@@ -6,47 +6,47 @@ class ServicesTest < Test::Unit::TestCase
   # --- Google ---
 
   def test_google_result_components
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "Manhattan",
       result.address_components_of_type(:sublocality).first['long_name']
   end
 
   def test_google_result_components_contains_route
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "Penn Plaza",
       result.address_components_of_type(:route).first['long_name']
   end
 
   def test_google_result_components_contains_street_number
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "4",
       result.address_components_of_type(:street_number).first['long_name']
   end
 
   def test_google_returns_city_when_no_locality_in_result
-    result = Geocoder.search("no locality").first
+    result = Geocoder2.search("no locality").first
     assert_equal "Haram", result.city
   end
 
   def test_google_city_results_returns_nil_if_no_matching_component_types
-    result = Geocoder.search("no city data").first
+    result = Geocoder2.search("no city data").first
     assert_equal nil, result.city
   end
 
   def test_google_street_address_returns_formatted_street_address
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "4 Penn Plaza", result.street_address
   end
 
   def test_google_precision
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "ROOFTOP",
       result.precision
   end
 
   def test_google_query_url_contains_bounds
-    lookup = Geocoder::Lookup::Google.new
-    url = lookup.query_url(Geocoder::Query.new(
+    lookup = Geocoder2::Lookup::Google.new
+    url = lookup.query_url(Geocoder2::Query.new(
       "Some Intersection",
       :bounds => [[40.0, -120.0], [39.0, -121.0]]
     ))
@@ -54,8 +54,8 @@ class ServicesTest < Test::Unit::TestCase
   end
 
   def test_google_query_url_contains_region
-    lookup = Geocoder::Lookup::Google.new
-    url = lookup.query_url(Geocoder::Query.new(
+    lookup = Geocoder2::Lookup::Google.new
+    url = lookup.query_url(Geocoder2::Query.new(
       "Some Intersection",
       :region => "gb"
     ))
@@ -63,8 +63,8 @@ class ServicesTest < Test::Unit::TestCase
   end
 
   def test_google_query_url_contains_components_when_given_as_string
-    lookup = Geocoder::Lookup::Google.new
-    url = lookup.query_url(Geocoder::Query.new(
+    lookup = Geocoder2::Lookup::Google.new
+    url = lookup.query_url(Geocoder2::Query.new(
       "Some Intersection",
       :components => "locality:ES"
     ))
@@ -73,8 +73,8 @@ class ServicesTest < Test::Unit::TestCase
   end
 
   def test_google_query_url_contains_components_when_given_as_array
-    lookup = Geocoder::Lookup::Google.new
-    url = lookup.query_url(Geocoder::Query.new(
+    lookup = Geocoder2::Lookup::Google.new
+    url = lookup.query_url(Geocoder2::Query.new(
       "Some Intersection",
       :components => ["country:ES", "locality:ES"]
     ))
@@ -85,86 +85,86 @@ class ServicesTest < Test::Unit::TestCase
   # --- Google Premier ---
 
   def test_google_premier_result_components
-    Geocoder.configure(:lookup => :google_premier)
+    Geocoder2.configure(:lookup => :google_premier)
     set_api_key!(:google_premier)
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "Manhattan",
       result.address_components_of_type(:sublocality).first['long_name']
   end
 
   def test_google_premier_query_url
-    Geocoder.configure(:api_key => ["deadbeef", "gme-test", "test-dev"])
+    Geocoder2.configure(:api_key => ["deadbeef", "gme-test", "test-dev"])
     assert_equal "http://maps.googleapis.com/maps/api/geocode/json?address=Madison+Square+Garden%2C+New+York%2C+NY&channel=test-dev&client=gme-test&language=en&sensor=false&signature=doJvJqX7YJzgV9rJ0DnVkTGZqTg=",
-      Geocoder::Lookup::GooglePremier.new.query_url(Geocoder::Query.new("Madison Square Garden, New York, NY"))
+      Geocoder2::Lookup::GooglePremier.new.query_url(Geocoder2::Query.new("Madison Square Garden, New York, NY"))
   end
 
   # --- DSTK (Data Science Toolkit) ---
 
   def test_dstk_result_components
-    Geocoder.configure(:lookup => :dstk, :dstk => { :host => 'NOT_AN_ACTUAL_HOST' })
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    Geocoder2.configure(:lookup => :dstk, :dstk => { :host => 'NOT_AN_ACTUAL_HOST' })
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "Manhattan",
       result.address_components_of_type(:sublocality).first['long_name']
   end
 
   def test_dstk_query_url
-    Geocoder.configure(:lookup => :dstk, :dstk => { :host => 'NOT_AN_ACTUAL_HOST' })
+    Geocoder2.configure(:lookup => :dstk, :dstk => { :host => 'NOT_AN_ACTUAL_HOST' })
     assert_equal "http://NOT_AN_ACTUAL_HOST/maps/api/geocode/json?address=Madison+Square+Garden%2C+New+York%2C+NY&language=en&sensor=false",
-      Geocoder::Lookup::Dstk.new.query_url(Geocoder::Query.new("Madison Square Garden, New York, NY"))
+      Geocoder2::Lookup::Dstk.new.query_url(Geocoder2::Query.new("Madison Square Garden, New York, NY"))
   end
 
   def test_dstk_default_query_url
-    Geocoder.configure(:lookup => :dstk)
+    Geocoder2.configure(:lookup => :dstk)
     assert_equal "http://www.datasciencetoolkit.org/maps/api/geocode/json?address=Madison+Square+Garden%2C+New+York%2C+NY&language=en&sensor=false",
-      Geocoder::Lookup::Dstk.new.query_url(Geocoder::Query.new("Madison Square Garden, New York, NY"))
+      Geocoder2::Lookup::Dstk.new.query_url(Geocoder2::Query.new("Madison Square Garden, New York, NY"))
   end
 
   # --- Yahoo ---
 
   def test_yahoo_no_results
-    Geocoder.configure(:lookup => :yahoo)
+    Geocoder2.configure(:lookup => :yahoo)
     set_api_key!(:yahoo)
-    assert_equal [], Geocoder.search("no results")
+    assert_equal [], Geocoder2.search("no results")
   end
 
   def test_yahoo_error
-    Geocoder.configure(:lookup => :yahoo)
+    Geocoder2.configure(:lookup => :yahoo)
     set_api_key!(:yahoo)
     # keep test output clean: suppress timeout warning
     orig = $VERBOSE; $VERBOSE = nil
-    assert_equal [], Geocoder.search("error")
+    assert_equal [], Geocoder2.search("error")
   ensure
     $VERBOSE = orig
   end
 
   def test_yahoo_result_components
-    Geocoder.configure(:lookup => :yahoo)
+    Geocoder2.configure(:lookup => :yahoo)
     set_api_key!(:yahoo)
-    result = Geocoder.search("madison square garden").first
+    result = Geocoder2.search("madison square garden").first
     assert_equal "10001", result.postal_code
   end
 
   def test_yahoo_address_formatting
-    Geocoder.configure(:lookup => :yahoo)
+    Geocoder2.configure(:lookup => :yahoo)
     set_api_key!(:yahoo)
-    result = Geocoder.search("madison square garden").first
+    result = Geocoder2.search("madison square garden").first
     assert_equal "Madison Square Garden, New York, NY 10001, United States", result.address
   end
 
   def test_yahoo_raises_exception_when_over_query_limit
-    Geocoder.configure(:always_raise => [Geocoder::OverQueryLimitError])
-    l = Geocoder::Lookup.get(:yahoo)
-    assert_raises Geocoder::OverQueryLimitError do
-      l.send(:results, Geocoder::Query.new("over limit"))
+    Geocoder2.configure(:always_raise => [Geocoder2::OverQueryLimitError])
+    l = Geocoder2::Lookup.get(:yahoo)
+    assert_raises Geocoder2::OverQueryLimitError do
+      l.send(:results, Geocoder2::Query.new("over limit"))
     end
   end
 
-  # --- Geocoder.ca ---
+  # --- Geocoder2.ca ---
 
   def test_geocoder_ca_result_components
-    Geocoder.configure(:lookup => :geocoder_ca)
+    Geocoder2.configure(:lookup => :geocoder_ca)
     set_api_key!(:geocoder_ca)
-    result = Geocoder.search([45.423733, -75.676333]).first
+    result = Geocoder2.search([45.423733, -75.676333]).first
     assert_equal "CA", result.country_code
     assert_equal "289 Somerset ST E, Ottawa, ON K1N6W1, Canada", result.address
   end
@@ -173,68 +173,68 @@ class ServicesTest < Test::Unit::TestCase
   # --- FreeGeoIp ---
 
   def test_freegeoip_result_on_ip_address_search
-    result = Geocoder.search("74.200.247.59").first
-    assert result.is_a?(Geocoder::Result::Freegeoip)
+    result = Geocoder2.search("74.200.247.59").first
+    assert result.is_a?(Geocoder2::Result::Freegeoip)
   end
 
   def test_freegeoip_result_components
-    result = Geocoder.search("74.200.247.59").first
+    result = Geocoder2.search("74.200.247.59").first
     assert_equal "Plano, TX 75093, United States", result.address
   end
 
   # --- MaxMind ---
 
   def test_maxmind_result_on_ip_address_search
-    Geocoder.configure(:ip_lookup => :maxmind, :maxmind => {:service => :city_isp_org})
-    result = Geocoder.search("74.200.247.59").first
-    assert result.is_a?(Geocoder::Result::Maxmind)
+    Geocoder2.configure(:ip_lookup => :maxmind, :maxmind => {:service => :city_isp_org})
+    result = Geocoder2.search("74.200.247.59").first
+    assert result.is_a?(Geocoder2::Result::Maxmind)
   end
 
   def test_maxmind_result_knows_country_service_name
-    Geocoder.configure(:ip_lookup => :maxmind, :maxmind => {:service => :country})
-    assert_equal :country, Geocoder.search("24.24.24.21").first.service_name
+    Geocoder2.configure(:ip_lookup => :maxmind, :maxmind => {:service => :country})
+    assert_equal :country, Geocoder2.search("24.24.24.21").first.service_name
   end
 
   def test_maxmind_result_knows_city_service_name
-    Geocoder.configure(:ip_lookup => :maxmind, :maxmind => {:service => :city})
-    assert_equal :city, Geocoder.search("24.24.24.22").first.service_name
+    Geocoder2.configure(:ip_lookup => :maxmind, :maxmind => {:service => :city})
+    assert_equal :city, Geocoder2.search("24.24.24.22").first.service_name
   end
 
   def test_maxmind_result_knows_city_isp_org_service_name
-    Geocoder.configure(:ip_lookup => :maxmind, :maxmind => {:service => :city_isp_org})
-    assert_equal :city_isp_org, Geocoder.search("24.24.24.23").first.service_name
+    Geocoder2.configure(:ip_lookup => :maxmind, :maxmind => {:service => :city_isp_org})
+    assert_equal :city_isp_org, Geocoder2.search("24.24.24.23").first.service_name
   end
 
   def test_maxmind_result_knows_omni_service_name
-    Geocoder.configure(:ip_lookup => :maxmind, :maxmind => {:service => :omni})
-    assert_equal :omni, Geocoder.search("24.24.24.24").first.service_name
+    Geocoder2.configure(:ip_lookup => :maxmind, :maxmind => {:service => :omni})
+    assert_equal :omni, Geocoder2.search("24.24.24.24").first.service_name
   end
 
   def test_maxmind_special_result_components
-    Geocoder.configure(:ip_lookup => :maxmind, :maxmind => {:service => :omni})
-    result = Geocoder.search("24.24.24.24").first
+    Geocoder2.configure(:ip_lookup => :maxmind, :maxmind => {:service => :omni})
+    result = Geocoder2.search("24.24.24.24").first
     assert_equal "Road Runner", result.isp_name
     assert_equal "Cable/DSL", result.netspeed
     assert_equal "rr.com", result.domain
   end
 
   def test_maxmind_raises_exception_when_service_not_configured
-    Geocoder.configure(:ip_lookup => :maxmind)
-    Geocoder.configure(:maxmind => {:service => nil})
-    assert_raises Geocoder::ConfigurationError do
-      Geocoder::Query.new("24.24.24.24").url
+    Geocoder2.configure(:ip_lookup => :maxmind)
+    Geocoder2.configure(:maxmind => {:service => nil})
+    assert_raises Geocoder2::ConfigurationError do
+      Geocoder2::Query.new("24.24.24.24").url
     end
   end
 
   def test_maxmind_works_when_loopback_address_on_omni
-    Geocoder.configure(:ip_lookup => :maxmind, :maxmind => { :service => :omni })
-    result = Geocoder.search("127.0.0.1").first
+    Geocoder2.configure(:ip_lookup => :maxmind, :maxmind => { :service => :omni })
+    result = Geocoder2.search("127.0.0.1").first
     assert_equal "", result.country_code
   end
 
   def test_maxmind_works_when_loopback_address_on_country
-    Geocoder.configure(:ip_lookup => :maxmind, :maxmind => { :service => :country })
-    result = Geocoder.search("127.0.0.1").first
+    Geocoder2.configure(:ip_lookup => :maxmind, :maxmind => { :service => :country })
+    result = Geocoder2.search("127.0.0.1").first
     assert_equal "", result.country_code
   end
 
@@ -242,107 +242,107 @@ class ServicesTest < Test::Unit::TestCase
   # --- Bing ---
 
   def test_bing_result_components
-    Geocoder.configure(:lookup => :bing)
+    Geocoder2.configure(:lookup => :bing)
     set_api_key!(:bing)
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "Madison Square Garden, NY", result.address
     assert_equal "NY", result.state
     assert_equal "New York", result.city
   end
 
   def test_bing_no_results
-    Geocoder.configure(:lookup => :bing)
+    Geocoder2.configure(:lookup => :bing)
     set_api_key!(:bing)
-    results = Geocoder.search("no results")
+    results = Geocoder2.search("no results")
     assert_equal 0, results.length
   end
 
   # --- Nominatim ---
 
   def test_nominatim_result_components
-    Geocoder.configure(:lookup => :nominatim)
+    Geocoder2.configure(:lookup => :nominatim)
     set_api_key!(:nominatim)
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "10001", result.postal_code
   end
 
   def test_nominatim_address_formatting
-    Geocoder.configure(:lookup => :nominatim)
+    Geocoder2.configure(:lookup => :nominatim)
     set_api_key!(:nominatim)
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "Madison Square Garden, West 31st Street, Long Island City, New York City, New York, 10001, United States of America",
       result.address
   end
 
   def test_nominatim_host_config
-    Geocoder.configure(:lookup => :nominatim, :nominatim => {:host => "local.com"})
-    lookup = Geocoder::Lookup::Nominatim.new
-    query = Geocoder::Query.new("Bluffton, SC")
+    Geocoder2.configure(:lookup => :nominatim, :nominatim => {:host => "local.com"})
+    lookup = Geocoder2::Lookup::Nominatim.new
+    query = Geocoder2::Query.new("Bluffton, SC")
     assert_match %r(http://local\.com), lookup.query_url(query)
   end
 
   # --- MapQuest ---
 
   def test_api_route
-    Geocoder.configure(:lookup => :mapquest, :api_key => "abc123")
-    lookup = Geocoder::Lookup::Mapquest.new
-    query = Geocoder::Query.new("Bluffton, SC")
+    Geocoder2.configure(:lookup => :mapquest, :api_key => "abc123")
+    lookup = Geocoder2::Lookup::Mapquest.new
+    query = Geocoder2::Query.new("Bluffton, SC")
     res = lookup.query_url(query)
     assert_equal "http://open.mapquestapi.com/geocoding/v1/address?key=abc123&location=Bluffton%2C+SC",
       res
   end
 
   def test_api_route_licensed
-    Geocoder.configure(:lookup => :mapquest, :api_key => "abc123", :mapquest => {:licensed => true, :version => 2})
-    lookup = Geocoder::Lookup::Mapquest.new
-    query = Geocoder::Query.new("Bluffton, SC")
+    Geocoder2.configure(:lookup => :mapquest, :api_key => "abc123", :mapquest => {:licensed => true, :version => 2})
+    lookup = Geocoder2::Lookup::Mapquest.new
+    query = Geocoder2::Query.new("Bluffton, SC")
     res = lookup.query_url(query)
     assert_equal "http://www.mapquestapi.com/geocoding/v2/address?key=abc123&location=Bluffton%2C+SC",
       res
   end
 
   def test_mapquest_result_components
-    Geocoder.configure(:lookup => :mapquest)
+    Geocoder2.configure(:lookup => :mapquest)
     set_api_key!(:mapquest)
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "10001", result.postal_code
   end
 
   def test_mapquest_address_formatting
-    Geocoder.configure(:lookup => :mapquest)
+    Geocoder2.configure(:lookup => :mapquest)
     set_api_key!(:mapquest)
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "46 West 31st Street, New York, NY, 10001, US",
       result.address
   end
 
   def test_mapquest_no_results
-    Geocoder.configure(:lookup => :mapquest)
+    Geocoder2.configure(:lookup => :mapquest)
     set_api_key!(:mapquest)
-    assert_equal [], Geocoder.search("no results")
+    assert_equal [], Geocoder2.search("no results")
   end
 
   def test_mapquest_raises_exception_when_invalid_request
-    Geocoder.configure(:always_raise => [Geocoder::InvalidRequest])
-    l = Geocoder::Lookup.get(:mapquest)
-    assert_raises Geocoder::InvalidRequest do
-      l.send(:results, Geocoder::Query.new("invalid request"))
+    Geocoder2.configure(:always_raise => [Geocoder2::InvalidRequest])
+    l = Geocoder2::Lookup.get(:mapquest)
+    assert_raises Geocoder2::InvalidRequest do
+      l.send(:results, Geocoder2::Query.new("invalid request"))
     end
   end
 
   def test_mapquest_raises_exception_when_invalid_api_key
-    Geocoder.configure(:always_raise => [Geocoder::InvalidApiKey])
-    l = Geocoder::Lookup.get(:mapquest)
-    assert_raises Geocoder::InvalidApiKey do
-      l.send(:results, Geocoder::Query.new("invalid api key"))
+    Geocoder2.configure(:always_raise => [Geocoder2::InvalidApiKey])
+    l = Geocoder2::Lookup.get(:mapquest)
+    assert_raises Geocoder2::InvalidApiKey do
+      l.send(:results, Geocoder2::Query.new("invalid api key"))
     end
   end
 
   def test_mapquest_raises_exception_when_error
-    Geocoder.configure(:always_raise => [Geocoder::Error])
-    l = Geocoder::Lookup.get(:mapquest)
-    assert_raises Geocoder::Error do
-      l.send(:results, Geocoder::Query.new("error"))
+    Geocoder2.configure(:always_raise => [Geocoder2::Error])
+    l = Geocoder2::Lookup.get(:mapquest)
+    assert_raises Geocoder2::Error do
+      l.send(:results, Geocoder2::Query.new("error"))
     end
   end
 
@@ -351,24 +351,24 @@ class ServicesTest < Test::Unit::TestCase
   # --- Esri ---
 
   def test_esri_query_for_geocode
-    query = Geocoder::Query.new("Bluffton, SC")
-    lookup = Geocoder::Lookup.get(:esri)
+    query = Geocoder2::Query.new("Bluffton, SC")
+    lookup = Geocoder2::Lookup.get(:esri)
     res = lookup.query_url(query)
     assert_equal "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?f=pjson&outFields=%2A&text=Bluffton%2C+SC",
       res
   end
 
   def test_esri_query_for_reverse_geocode
-    query = Geocoder::Query.new([45.423733, -75.676333])
-    lookup = Geocoder::Lookup.get(:esri)
+    query = Geocoder2::Query.new([45.423733, -75.676333])
+    lookup = Geocoder2::Lookup.get(:esri)
     res = lookup.query_url(query)
     assert_equal "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=pjson&location=-75.676333%2C45.423733&outFields=%2A",
       res
   end
 
   def test_esri_results_component
-    Geocoder.configure(:lookup => :esri)
-    result = Geocoder.search("Madison Square Garden, New York, NY").first
+    Geocoder2.configure(:lookup => :esri)
+    result = Geocoder2.search("Madison Square Garden, New York, NY").first
     assert_equal "10001", result.postal_code
     assert_equal "USA", result.country
     assert_equal "Madison Square Garden", result.address
@@ -379,8 +379,8 @@ class ServicesTest < Test::Unit::TestCase
   end
 
   def test_esri_results_component_when_reverse_geocoding
-    Geocoder.configure(:lookup => :esri)
-    result = Geocoder.search([45.423733, -75.676333]).first
+    Geocoder2.configure(:lookup => :esri)
+    result = Geocoder2.search([45.423733, -75.676333]).first
     assert_equal "75007", result.postal_code
     assert_equal "FRA", result.country
     assert_equal "4 Avenue Gustave Eiffel", result.address

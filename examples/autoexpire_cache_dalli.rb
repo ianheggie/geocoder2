@@ -6,7 +6,7 @@
 class AutoexpireCacheDalli
   def initialize(store, ttl = 86400)
     @store = store
-    @keys = 'GeocoderDalliClientKeys'
+    @keys = 'Geocoder2DalliClientKeys'
     @ttl = ttl
   end
 
@@ -59,4 +59,4 @@ end
 # Here Dalli is set up as on Heroku using the Memcachier gem.
 # https://devcenter.heroku.com/articles/memcachier#ruby
 # On other setups you might have to specify your Memcached server in Dalli::Client.new
-Geocoder.configure(:cache => AutoexpireCacheDalli.new(Dalli::Client.new))
+Geocoder2.configure(:cache => AutoexpireCacheDalli.new(Dalli::Client.new))
