@@ -1,7 +1,7 @@
-Geocoder
-========
+Geocoder2
+=========
 
-Geocoder is a complete geocoding solution for Ruby. With Rails it adds geocoding (by street or IP address), reverse geocoding (find street address based on given coordinates), and distance queries. It's as simple as calling `geocode` on your objects, and then using a scope like `Venue.near("Billings, MT")`.
+Geocoder2 is a complete geocoding solution for Ruby on Rails v2.3. With Rails it adds geocoding (by street or IP address), reverse geocoding (find street address based on given coordinates), and distance queries. It's as simple as calling `geocode` on your objects, and then using a scope like `Venue.near("Billings, MT")`.
 
 
 Compatibility
@@ -9,7 +9,7 @@ Compatibility
 
 * Supports multiple Ruby versions: Ruby 1.8.7, 1.9.2, 1.9.3, 2.0.0, and JRuby.
 * Supports multiple databases: MySQL, PostgreSQL, SQLite, and MongoDB (1.7.0 and higher).
-* Supports Rails 3 and 4. If you need to use it with Rails 2 please see the `rails2` branch (no longer maintained, limited feature set).
+* This is a clone of the Geocoder gem at v1.1.9 with updates to handle an api_key with google.
 * Works very well outside of Rails, you just need to install either the `json` (for MRI) or `json_pure` (for JRuby) gem.
 
 
@@ -18,11 +18,11 @@ Installation
 
 Install Geocoder like any other Ruby gem:
 
-    gem install geocoder
+    gem install geocoder2
 
 Or, if you're using Rails/Bundler, add this to your Gemfile:
 
-    gem "geocoder"
+    gem "geocoder2"
 
 and run at the command prompt:
 

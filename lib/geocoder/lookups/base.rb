@@ -227,16 +227,17 @@ module Geocoder
       def make_api_request(query)
         timeout(configuration.timeout) do
           uri = URI.parse(query_url(query))
-          # client = http_client.new(uri.host, uri.port)
-          # client.use_ssl = true if configuration.use_https
-          # client.get(uri.request_uri, configuration.http_headers)
+          puts "DEBUG: #{uri.inspect}"
+          client = http_client.new(uri.host, uri.port)
+          client.use_ssl = true if configuration.use_https
+          client.get(uri.request_uri, configuration.http_headers)
 
-          http_client.start(uri.host, uri.port) do |client|
-            client.use_ssl = true if configuration.use_https
-            req = Net::HTTP::Get.new(uri.request_uri, configuration.http_headers)
-            req.basic_auth(uri.user, uri.password) if uri.user and uri.password
-            client.request(req)
-          end
+          #http_client.start(uri.host, uri.port) do |client|
+          #  client.use_ssl = true if configuration.use_https
+          #  req = Net::HTTP::Get.new(uri.request_uri, configuration.http_headers)
+          #  req.basic_auth(uri.user, uri.password) if uri.user and uri.password
+          #  client.request(req)
+          #end
         end
       end
 

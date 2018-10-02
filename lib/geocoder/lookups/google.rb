@@ -13,13 +13,15 @@ module Geocoder::Lookup
     end
 
     def query_url(query)
+      "#{configuration.api_key ? 'https' : protocol}://maps.googleapis.com/maps/api/geocode/json?" + url_query_string(query)
       "#{protocol}://maps.googleapis.com/maps/api/geocode/json?" + url_query_string(query)
     end
 
     private # ---------------------------------------------------------------
 
     def valid_response?(response)
-      status = parse_json(response.body)["status"]
+      json = parse_json(response.body)
+      status = json["status"] if json
       super(response) and ['OK', 'ZERO_RESULTS'].include?(status)
     end
 
@@ -43,7 +45,7 @@ module Geocoder::Lookup
     def query_url_google_params(query)
       params = {
         (query.reverse_geocode? ? :latlng : :address) => query.sanitized_text,
-        :sensor => "false",
+        #:sensor => "false",
         :language => configuration.language
       }
       unless (bounds = query.options[:bounds]).nil?
