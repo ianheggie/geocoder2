@@ -1,15 +1,15 @@
-# This class allows you to configure how Geocoder should treat errors that occur when
+# This class allows you to configure how Geocoder2 should treat errors that occur when
 # the cache is not available.
 # Configure it like this
-# config/initializers/geocoder.rb
-# Geocoder.configure(
-#  :cache => Geocoder::CacheBypass.new(Redis.new)
+# config/initializers/geocoder2.rb
+# Geocoder2.configure(
+#  :cache => Geocoder2::CacheBypass.new(Redis.new)
 # )
 #
 # Depending on the value of @bypass this will either
 # raise the exception (true) or swallow it and pretend the cache did not return a hit (false)
 #
-class Geocoder::CacheBypass
+class Geocoder2::CacheBypass
   def initialize(target, bypass = true)
     @target = target
     @bypass = bypass

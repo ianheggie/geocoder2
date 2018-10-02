@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'geocoder2/cli'
+
+Geocoder2::Cli.run ARGV

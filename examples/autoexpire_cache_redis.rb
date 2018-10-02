@@ -25,4 +25,4 @@ class AutoexpireCacheRedis
   end
 end
 
-Geocoder.configure(:cache => AutoexpireCacheRedis.new(Redis.new))
+Geocoder2.configure(:cache => AutoexpireCacheRedis.new(Redis.new))

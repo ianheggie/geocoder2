@@ -8,7 +8,7 @@
 #
 # 1. Fix to prevent param-array conversion, as mentioned in Gist comment.
 # 2. Query string escaping has been changed. See:
-#   https://github.com/alexreisner/geocoder/pull/360
+#   https://github.com/alexreisner/geocoder2/pull/360
 #
 
 require 'uri'

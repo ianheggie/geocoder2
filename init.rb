@@ -1,1 +1,1 @@
-require 'geocoder'
+require 'geocoder2'

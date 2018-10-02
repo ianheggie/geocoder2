@@ -63,14 +63,14 @@ end
 module Rails
 end
 
-# Require Geocoder after ActiveRecord simulator.
-require 'geocoder'
-require "geocoder/lookups/base"
+# Require Geocoder2 after ActiveRecord simulator.
+require 'geocoder2'
+require "geocoder2/lookups/base"
 
 ##
 # Mock HTTP request to geocoding service.
 #
-module Geocoder
+module Geocoder2
   module Lookup
     class Base
       private
@@ -255,12 +255,12 @@ end
 class Test::Unit::TestCase
 
   def setup
-    Geocoder.configure(:maxmind => {:service => :city_isp_org})
+    Geocoder2.configure(:maxmind => {:service => :city_isp_org})
   end
 
   def teardown
-    Geocoder.send(:remove_const, :Configuration)
-    load "geocoder/configuration.rb"
+    Geocoder2.send(:remove_const, :Configuration)
+    load "geocoder2/configuration.rb"
   end
 
   def venue_params(abbrev)
@@ -276,7 +276,7 @@ class Test::Unit::TestCase
   end
 
   def set_api_key!(lookup_name)
-    lookup = Geocoder::Lookup.get(lookup_name)
+    lookup = Geocoder2::Lookup.get(lookup_name)
     if lookup.required_api_key_parts.size == 1
       key = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
     elsif lookup.required_api_key_parts.size > 1
@@ -284,6 +284,6 @@ class Test::Unit::TestCase
     else
       key = nil
     end
-    Geocoder.configure(:api_key => key)
+    Geocoder2.configure(:api_key => key)
   end
 end

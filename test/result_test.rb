@@ -4,19 +4,19 @@ require 'test_helper'
 class ResultTest < Test::Unit::TestCase
 
   def test_result_has_required_attributes
-    Geocoder::Lookup.all_services_except_test.each do |l|
-      Geocoder.configure(:lookup => l)
+    Geocoder2::Lookup.all_services_except_test.each do |l|
+      Geocoder2.configure(:lookup => l)
       set_api_key!(l)
-      result = Geocoder.search([45.423733, -75.676333]).first
+      result = Geocoder2.search([45.423733, -75.676333]).first
       assert_result_has_required_attributes(result)
     end
   end
 
   def test_yandex_result_without_city_does_not_raise_exception
     assert_nothing_raised do
-      Geocoder.configure(:lookup => :yandex)
+      Geocoder2.configure(:lookup => :yandex)
       set_api_key!(:yandex)
-      result = Geocoder.search("no city and town").first
+      result = Geocoder2.search("no city and town").first
       assert_equal "", result.city
     end
   end
@@ -25,7 +25,7 @@ class ResultTest < Test::Unit::TestCase
   private # ------------------------------------------------------------------
 
   def assert_result_has_required_attributes(result)
-    m = "Lookup #{Geocoder.config.lookup} does not support %s attribute."
+    m = "Lookup #{Geocoder2.config.lookup} does not support %s attribute."
     assert result.coordinates.is_a?(Array),    m % "coordinates"
     assert result.latitude.is_a?(Float),       m % "latitude"
     assert result.longitude.is_a?(Float),      m % "longitude"
